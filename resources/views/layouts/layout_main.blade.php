@@ -87,6 +87,9 @@
     <link rel="stylesheet" href="{{ asset('stisla/dist/assets/modules/weather-icon/css/weather-icons-wind.min.css') }}">
     <link rel="stylesheet" href="{{ asset('stisla/dist/assets/modules/summernote/summernote-bs4.css') }}">
 
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="{{ asset('stisla/dist/assets/modules/bootstrap-daterangepicker/daterangepicker.css')}}">
+
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('stisla/dist/assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('stisla/dist/assets/css/components.css') }}">
@@ -163,7 +166,8 @@
     <script src="{{ asset('stisla/dist/assets/modules/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
 
     <!-- JS Libraies -->
-    <script src="{{ asset('stisla/dist/assets/modules/prism/prism.js')}}"></script>    
+    <script src="{{ asset('stisla/dist/assets/modules/prism/prism.js')}}"></script> 
+    <script src="{{ asset('stisla/dist/assets/modules/bootstrap-daterangepicker/daterangepicker.js')}}"></script>   
 
     <!-- Page Specific JS File -->
     <script src="{{ asset('stisla/dist/assets/js/page/bootstrap-modal.js')}}"></script>

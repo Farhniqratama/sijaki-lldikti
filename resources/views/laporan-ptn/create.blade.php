@@ -151,7 +151,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <small class="form-text text-muted">Format: PDF, Maksimal: 2MB</small>
+                                <small class="form-text text-muted">Format: PDF, Maksimal: 10MB</small>
                             </div>
 
                             <div class="form-group">

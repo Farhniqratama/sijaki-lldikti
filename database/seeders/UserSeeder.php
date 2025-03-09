@@ -18,11 +18,25 @@ class UserSeeder extends Seeder
             'name' => 'ADMINKLK',
             'pokja' => 'Admin SI-JAKI',
             'akses' => 'Admin',
-            'password' => Hash::make('lldikti3'),
+            'password' => Hash::make('admin_lldikti3'),
         ]);
         User::create([
             'name' => 'KLK',
             'pokja' => 'Kelembagaan dan Kemitraan',
+            'akses' => 'User',
+            'password' => Hash::make('lldikti3'),
+        ]);
+
+        User::create([
+            'name' => 'BAGUM',
+            'pokja' => 'Kepala Bagian Umum',
+            'akses' => 'User',
+            'password' => Hash::make('lldikti3'),
+        ]);
+
+        User::create([
+            'name' => 'KEPALA',
+            'pokja' => 'Kepala LLDIKTI',
             'akses' => 'User',
             'password' => Hash::make('lldikti3'),
         ]);

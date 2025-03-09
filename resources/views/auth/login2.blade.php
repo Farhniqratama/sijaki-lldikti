@@ -7,7 +7,7 @@
     }
 
     body {
-        background-image: url('{{ asset("background.png") }}');
+        background-image: url('{{ asset("bguniv.jpg") }}');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
@@ -55,8 +55,7 @@
                                 <!-- SI-JAKI Image on Top -->
                                 <img src="{{ asset('logo/logo-sijaki-sidebar.png') }}" alt="SI-JAKI"
                                     class="w-32 mb-4 logo-white-filter">
-                                <p class="text-gray-200 font-normal leading-relaxed">Sistem Informasi Jejak Pembinaan
-                                    Perguruan Tinggi
+                                <p class="text-gray-200 font-normal leading-relaxed">Di Jejak Pembinaan Perguruan Tinggi
                                 </p>
                             </div>
                         </div>
@@ -130,14 +129,8 @@
 
                             <!-- Link Daftar -->
                             <div class="mt-4">
-                                <p class="text-sm text-gray-600 flex justify-center items-center">
-                                    Belum punya akun?
-                                    <a href="https://wa.me/6285299709081" target="_blank"
-                                        class="text-sky-600 font-medium ml-1 flex items-center">
-                                        Hubungi Admin
-                                        <img src="{{ asset('logo/social.png') }}" alt="Daftar Sekarang"
-                                            class="h-6 ml-2">
-                                    </a>
+                                <p class="text-sm text-gray-600">
+                                    Belum punya akun? <a class="text-sky-600 font-medium">Daftar Sekarang</a>
                                 </p>
                             </div>
 

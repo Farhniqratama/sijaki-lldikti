@@ -1,3 +1,91 @@
+# SI – JAKI
+
+**SI – JAKI** adalah singkatan dari _Sistem Informasi Jejak Pembinaan Perguruan Tinggi_. Website ini berfungsi untuk mencatat kegiatan jejak pembinaan pada setiap perguruan tinggi, seperti:
+- Rapat/audiensi
+- Visitasi
+- Monitoring & evaluasi
+- Aduan/laporan
+- Teguran/sanksi
+
+---
+
+## Cara Instalasi dan Penggunaan
+
+Berikut adalah langkah-langkah untuk menginstal dan menggunakan aplikasi ini:
+
+### 1. Clone Repository
+Clone repository ini ke direktori lokal Anda:
+```bash
+git clone https://github.com/dzaky-santino/si-jaki.git
+```
+
+### 2. Masuk Ke Folder si-jaki
+```bash
+cd si-jaki
+```
+
+### 3. Membuat File .env
+Copy file .env.example menjadi .env:
+```bash
+cp .env.example .env
+```
+Kemudian, sesuaikan konfigurasi database di file .env sesuai dengan pengaturan server lokal Anda.
+
+### 4. Instal Dependensi
+Jalankan perintah berikut untuk menginstal dependensi PHP menggunakan Composer:
+```bash
+composer install
+```
+
+### 5. Generate Application Key
+Generate application key Laravel untuk aplikasi Anda:
+```bash
+php artisan key:generate
+```
+### 6. Migrasi dan Seeder
+Lakukan migrasi database dan jalankan seeder untuk mengisi data awal aplikasi:
+```bash
+php artisan migrate --seed
+```
+
+### 7. Menambahkan Akun Admin
+Seeder default hanya membuat akun pengguna (User). Anda dapat menambahkan akun admin dengan cara berikut:
+1. Buka file database/seeders/UserSeeder.php 
+2. Tambahkan kode berikut:
+
+```php
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
+User::create([
+    'name' => 'Admin',
+    'email' => 'admin@example.com',
+    'password' => Hash::make('adminpassword'),
+    'role' => 'admin', // Pastikan kolom `role` tersedia dalam tabel `users`
+]);
+```
+
+3. Setelah menambahkan kode, jalankan ulang seeder:
+```bash
+php artisan db:seed
+```
+
+### 8. Buat Link ke Storage
+Agar file yang di-upload dapat diakses, jalankan perintah berikut untuk membuat symbolic link:
+```bash
+php artisan storage:link
+```
+
+### 9. Jalankan Server Lokal
+Jalankan server lokal untuk melihat website:
+```bash
+php artisan serve
+```
+Website dapat diakses melalui URL:
+```arduino
+http://127.0.0.1:8000
+```
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">

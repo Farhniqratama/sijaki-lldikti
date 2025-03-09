@@ -92,7 +92,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Dokumen Notula/Hasil Pembinaan (PDF) Maksimal: 2MB</label>
+                                <label>Dokumen Notula/Hasil Pembinaan (PDF) Maksimal: 10MB</label>
                                 <input type="file" class="form-control modern-file-input" name="dokumen_notula"
                                     accept=".pdf">
                                 @if($laporan->dokumen_notula)

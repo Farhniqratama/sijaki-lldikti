@@ -67,6 +67,7 @@
                                         <th>Kode Perguruan Tinggi</th>
                                         <th>Nama Perguruan Tinggi</th>
                                         <th>Status</th>
+                                        <th>Tanggal SK</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -85,6 +86,7 @@
                                                 </a>
                                             @endif
                                         </td>
+                                        <td>{{ $data->tanggal ? $data->tanggal->format('d-m-Y') : '-' }}</td>
                                         <td>
                                             <!-- Edit Button -->
                                             <a href="{{ route('data-histori-pt.edit', $data->uuid) }}" class="btn btn-warning btn-sm" title="Edit Data" data-toggle="tooltip">
@@ -193,6 +195,11 @@
     }
 
     table.modern-table th:nth-child(5) {
+        color: #ffffff;
+        /* Green font for column Aksi */
+    }
+
+    table.modern-table th:nth-child(6) {
         color: #ffffff;
         /* Green font for column Aksi */
     }

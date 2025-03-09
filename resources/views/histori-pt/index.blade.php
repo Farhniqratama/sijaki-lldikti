@@ -31,7 +31,10 @@
                                     <option value="100">100</option>
                                 </select>
                             </div>
-                            <div class="d-flex align-items-center mb-2 mb-md-0">
+                            <div class="d-flex align-items-center mb-2 mb-md-0 gap-custom">
+                                <a href="{{ route('data-histori-pt.download') }}" class="btn btn-success centered-button">
+                                    <i class="fas fa-file-excel"></i> Unduh Data Excel
+                                </a>
                                 <input type="text" id="searchInput" class="form-control" placeholder="Search..."
                                     onkeyup="searchTable()">
                             </div>
@@ -47,6 +50,7 @@
                                         <th>Kode Perguruan Tinggi</th>
                                         <th>Nama Perguruan Tinggi</th>
                                         <th>Status</th>
+                                        <th>Tanggal SK</th>
                                     </tr>
                                 </thead>
                                 <tbody id="dataTable">
@@ -63,6 +67,7 @@
                                                 </a>
                                             @endif
                                         </td>
+                                        <td>{{ $data->tanggal ? $data->tanggal->format('d-m-Y') : '-' }}</td>
                                     </tr>
 
                                     <!-- Modal for showing keterangan -->
@@ -156,6 +161,11 @@
         /* Green font for column Aksi */
     }
 
+    table.modern-table th:nth-child(6) {
+        color: #ffffff;
+        /* Green font for column Aksi */
+    }
+
     /* Responsive Adjustments */
     @media (max-width: 768px) {
         table.modern-table th {
@@ -213,6 +223,16 @@
         justify-content: center;
         align-items: center;
         min-height: 100vh; /* Modal selalu muncul di tengah layar */
+    }
+
+    /* Tambahkan gaya khusus untuk jarak */
+    .gap-custom > * {
+        margin-right: 20px; /* Jarak antar elemen */
+    }
+
+    /* Pastikan elemen terakhir tidak memiliki margin tambahan */
+    .gap-custom > *:last-child {
+        margin-right: 0;
     }
 </style>
 @endpush

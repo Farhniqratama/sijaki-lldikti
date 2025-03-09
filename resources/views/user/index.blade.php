@@ -162,16 +162,18 @@
                                             <i class="fas fa-pencil-alt"></i> Edit
                                         </a>
                             
-                                        <!-- Delete Button -->
-                                        <form action="{{ route('user.destroy', $user->uuid) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm"
-                                                onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')" title="Hapus Data"
-                                                data-toggle="tooltip">
-                                                <i class="fas fa-trash"></i> Hapus
-                                            </button>
-                                        </form>
+                                       <!-- Delete Button -->
+                                        @if ($user->akses !== 'Admin') <!-- Hanya tampilkan jika akses bukan "admin" -->
+                                            <form action="{{ route('user.destroy', $user->uuid) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')" title="Hapus Data"
+                                                    data-toggle="tooltip">
+                                                    <i class="fas fa-trash"></i> Hapus
+                                                </button>
+                                            </form>
+                                        @endif
                                     </td>
                                 </tr>
                                 @empty

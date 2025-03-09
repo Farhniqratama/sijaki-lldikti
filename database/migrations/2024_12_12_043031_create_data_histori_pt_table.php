@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama_pt'); 
             $table->string('status_pt');
             $table->text('keterangan')->nullable();
+            $table->date('tanggal')->nullable();
             $table->timestamps();
         });
     }

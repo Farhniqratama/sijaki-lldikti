@@ -48,6 +48,11 @@
                                 </select>
                             </div>
 
+                            <div class="form-group">
+                                <label for="tanggal">Tanggal SK</label>
+                                <input type="text" name="tanggal" id="tanggal" value="{{ $data->tanggal }}" class="form-control datepicker" required>
+                            </div>
+
                             <div class="form-group" id="keteranganForm" style="display: none;">
                                 <label for="keterangan">Keterangan<span class="text-danger">*</span></label>
                                 <textarea class="form-control modern-textarea @error('keterangan') is-invalid @enderror" name="keterangan" id="keterangan" rows="4">{{ $data->keterangan }}</textarea>

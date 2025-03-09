@@ -18,6 +18,10 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
 });
 
+Route::get('login2', function () {
+    return view('auth.login2');
+})->name('login2');
+
 // Rute untuk halaman home dan akses yang membutuhkan autentikasi
 Route::middleware(['auth', AksesMiddleware::class])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -114,3 +118,4 @@ Route::middleware(['auth', AksesMiddleware::class])->group(function () {
         return redirect()->back();
     })->name('notifications.markAllAsRead');
 });
+

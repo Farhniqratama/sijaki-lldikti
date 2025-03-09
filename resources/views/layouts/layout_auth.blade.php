@@ -99,7 +99,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>@yield('title', 'Login') &mdash; SI-JAKI</title>
+    <title>@yield('title')SI-JAKI</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('stisla/dist/assets/modules/bootstrap/css/bootstrap.min.css') }}">

@@ -26,6 +26,11 @@ class AksesMiddleware
         } elseif ($user->akses === 'User') {
             // Jika pengguna adalah User, batasi akses ke rute `users` dan `pt` saja
             if ($request->is('users*') || $request->is('ptn*') || $request->is('pts*') || $request->is('data-histori-pt*')) {
+                // Izinkan akses untuk unduh data Excel
+                if ($request->routeIs('data-histori-pt.download')) {
+                    return $next($request);
+                }
+                
                 return redirect()->route('home')->with('error', 'Anda tidak memiliki akses ke halaman ini.');
             }
             // Izinkan akses ke rute lain termasuk `home`, `logout`, dan `laporan`

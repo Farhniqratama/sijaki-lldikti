@@ -1,0 +1,13 @@
+{
+  "resources/js/theme.js": {
+    "file": "assets/theme-l0sNRNKZ.js",
+    "name": "theme",
+    "src": "resources/js/theme.js",
+    "isEntry": true
+  },
+  "resources/scss/style.scss": {
+    "file": "assets/style-Cc0Kvf3Q.css",
+    "src": "resources/scss/style.scss",
+    "isEntry": true
+  }
+}

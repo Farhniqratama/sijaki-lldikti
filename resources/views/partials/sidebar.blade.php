@@ -60,7 +60,13 @@
             </li>
         </ul>
 
-        <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
+        <div class="p-3 hide-sidebar-mini">
+            <a href="{{ asset('Manual Book SI-JAKI.pdf') }}" target="_blank" class="btn btn-primary btn-lg btn-block btn-icon-split">
+                <i class="fas fa-book"></i> Buku Panduan
+            </a>
+        </div>
+
+        <div class="mb-4 p-3 hide-sidebar-mini">
             <a href="{{ route('home') }}" class="btn btn-primary btn-lg btn-block btn-icon-split">
                 <i class="fas fa-home"></i> Beranda
             </a>

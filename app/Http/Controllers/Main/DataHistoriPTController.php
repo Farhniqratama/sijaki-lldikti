@@ -9,6 +9,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\DataHistoriPTImport;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Carbon\Carbon;
 
 class DataHistoriPTController extends Controller
 {
@@ -42,24 +43,55 @@ class DataHistoriPTController extends Controller
                 'file' => 'required|mimes:xlsx,xls'
             ]);
 
-            Excel::import(new DataHistoriPTImport, $request->file('file'));
+            // Add logging before import
+            \Log::info('Starting Excel import');
+            
+            try {
+                Excel::import(new DataHistoriPTImport, $request->file('file'));
+                \Log::info('Excel import completed successfully');
+            } catch (\Exception $e) {
+                \Log::error('Error importing Excel file: ' . $e->getMessage());
+                return redirect()->back()->with('error', 'Terjadi kesalahan saat mengimpor file: ' . $e->getMessage());
+            }
         } else {
             $request->validate([
                 'kode_pt' => 'required',
                 'nama_pt' => 'required',
                 'status_pt' => 'required',
-                'keterangan' => 'nullable|string'
+                'keterangan' => 'nullable|string',
+                'tanggal' => 'nullable|date'
             ]);
+
+            // Pastikan tanggal valid sebelum disimpan
+            $tanggal = $this->parseTanggal($request->tanggal);
 
             DataHistoriPT::create([
                 'kode_pt' => $request->kode_pt,
                 'nama_pt' => $request->nama_pt,
                 'status_pt' => $request->status_pt,
                 'keterangan' => $request->keterangan,
+                'tanggal' => $tanggal,
             ]);
         }
 
         return redirect()->route('data-histori-pt.index')->with('success', 'Data berhasil disimpan!');
+    }
+
+    private function parseTanggal($tanggal)
+    {
+        // Jika tanggal kosong atau berisi '-', kembalikan null
+        if (empty($tanggal) || $tanggal === '-') {
+            return null;
+        }
+
+        // Coba untuk mengonversi ke format tanggal yang valid
+        try {
+            return Carbon::parse($tanggal)->format('Y-m-d');
+        } catch (\Exception $e) {
+            // Jika gagal, kembalikan null
+            \Log::warning("Failed to parse date in controller: " . $tanggal . " - " . $e->getMessage());
+            return null;
+        }
     }
 
     // Menampilkan data histori PT tertentu
@@ -86,13 +118,18 @@ class DataHistoriPTController extends Controller
             'nama_pt' => 'required',
             'status_pt' => 'required',
             'keterangan' => 'nullable|string',
+            'tanggal' => 'nullable|date',
         ]);
     
+        // Parse tanggal using our helper function
+        $tanggal = $this->parseTanggal($request->tanggal);
+        
         $data->update([
             'kode_pt' => $request->kode_pt,
             'nama_pt' => $request->nama_pt,
             'status_pt' => $request->status_pt,
             'keterangan' => $request->keterangan,
+            'tanggal' => $tanggal,
         ]);
     
         return redirect()->route('data-histori-pt.index')->with('success', 'Data berhasil diperbarui!');
@@ -120,17 +157,27 @@ class DataHistoriPTController extends Controller
         return Excel::download(new class implements FromCollection, WithHeadings {
             public function collection()
             {
-                // Hanya mengambil kolom 'kode_pt', 'nama_pt', 'status_pt', dan 'keterangan'
-                return DataHistoriPT::select('kode_pt', 'nama_pt', 'status_pt', 'keterangan')->get();
+                return DataHistoriPT::all()
+                    ->map(function ($item) {
+                        return [
+                            'kode_pt' => $item->kode_pt,
+                            'nama_pt' => $item->nama_pt,
+                            'status_pt' => $item->status_pt,
+                            'keterangan' => $item->keterangan,
+                            // Convert tanggal to string or return null for empty dates
+                            'tanggal' => $item->tanggal ? $item->tanggal->format('Y-m-d') : null,
+                        ];
+                    });
             }
-
+    
             public function headings(): array
             {
                 return [
                     'Kode PT', 
                     'Nama PT', 
                     'Status', 
-                    'Keterangan'
+                    'Keterangan',
+                    'Tanggal SK'
                 ];
             }
         }, 'data-histori-pt.xlsx');

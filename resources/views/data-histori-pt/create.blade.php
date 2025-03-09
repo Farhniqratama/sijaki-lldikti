@@ -101,6 +101,14 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            <div class="form-group">
+                                <label for="tanggal">Tanggal SK</label>
+                                <input type="text" name="tanggal" class="form-control datepicker @error('tanggal') is-invalid @enderror" id="tanggal" value="{{ old('tanggal') }}">
+                                @error('tanggal')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="form-group">

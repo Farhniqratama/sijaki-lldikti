@@ -49,7 +49,7 @@ class LaporanNegeriController extends Controller
             'tempat_kegiatan' => 'required|string|max:255',
             'jenis_kegiatan' => 'required|in:Rapat/Audiensi,Visitasi,Monitoring & Evaluasi,Aduan/Laporan,Teguran/Sanksi',
             // Validasi dokumen notula untuk user selain ADIA
-            'dokumen_notula' => $isAdia ? 'nullable|file|mimes:pdf|max:2048' : 'required|file|mimes:pdf|max:2048',
+            'dokumen_notula' => $isAdia ? 'nullable|file|mimes:pdf|max:10240' : 'required|file|mimes:pdf|max:10240',
             'dokumen_undangan' => 'required|file|mimes:pdf|max:2048',
             'resume' => 'required|string|max:500',
             'createdbyuser' => 'required|string|max:255',
@@ -67,7 +67,7 @@ class LaporanNegeriController extends Controller
             'jenis_kegiatan.in' => 'Jenis kegiatan tidak valid.',
             'dokumen_notula.required' => 'Dokumen notula harus diunggah.',
             'dokumen_notula.mimes' => 'Dokumen notula harus berformat PDF.',
-            'dokumen_notula.max' => 'Ukuran dokumen notula maksimal 2MB.',
+            'dokumen_notula.max' => 'Ukuran dokumen notula maksimal 10MB.',
             'dokumen_undangan.required' => 'Dokumen undangan harus diunggah.',
             'dokumen_undangan.mimes' => 'Dokumen undangan harus berformat PDF.',
             'dokumen_undangan.max' => 'Ukuran dokumen undangan maksimal 2MB.',
