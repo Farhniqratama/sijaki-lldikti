@@ -1,24 +1,22 @@
-<div class="main-sidebar sidebar-style-2 animated-sidebar" style="background-image: url('{{ asset('image/bgblue.jpg') }}'); background-size: cover; background-position: center;">
+<div class="main-sidebar sidebar-style-2 animated-sidebar"
+    style="background-image: url('{{ asset('image/bgblue.jpg') }}'); background-size: cover; background-position: center;">
     <aside id="sidebar-wrapper">
-        <div class="sidebar-brand text-center">
-            <a href="{{route('home')}}">
-                <div class="logo-container-large">
-                    <img src="{{ asset('logo/logo-jaki.png') }}" alt="SI-JAKI Logo" class="brand-image-large animated-logo">
-                </div>
-            </a>            
-        </div>
-        <div class="sidebar-brand sidebar-brand-sm text-center">
+        <div class="sidebar-brand text-center mt-4">
+            <!-- Added margin-top -->
             <a href="{{ route('home') }}">
-                <div class="logo-container-small">
-                    <img src="{{ asset('logo/logo-sijaki-sidebar.png') }}" alt="SI-JAKI Logo" class="brand-image-small animated-logo-small">
+                <div class="logo-container-medium">
+                    <img src="{{ asset('logo/logo-sijaki-sidebar.png') }}" alt="SI-JAKI Logo"
+                        class="brand-image-medium animated-logo">
                 </div>
             </a>
-        </div>        
+        </div>
         <ul class="sidebar-menu">
             @if (Auth::user()->akses === 'Admin')
             <li class="menu-header">Manajemen Data</li>
-            <li class="dropdown {{ Request::is('pts*') || Request::is('ptn*') || Request::is('users*') || Request::is('data-histori-pt*') ? 'active' : '' }}">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-database" style="color: #1F509A"></i><span>Master Data</span></a>
+            <li
+                class="dropdown {{ Request::is('pts*') || Request::is('ptn*') || Request::is('users*') || Request::is('data-histori-pt*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-database"
+                        style="color: #1F509A"></i><span>Master Data</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('pts*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('pts.index') }}">Perguruan Tinggi Swasta</a>
@@ -38,7 +36,8 @@
 
             <li class="menu-header">Manajemen Laporan</li>
             <li class="dropdown {{ Request::is('laporan-pts*') || Request::is('laporan-ptn*') ? 'active' : '' }}">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-folder" style="color: #1F509A"></i> <span>Dokumen</span></a>
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-folder" style="color: #1F509A"></i>
+                    <span>Dokumen</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('laporan-pts*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('laporan-pts.index') }}">Laporan PTS</a>
@@ -51,7 +50,8 @@
 
             <li class="menu-header">Histori Perguruan Tinggi</li>
             <li class="dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-history" style="color: #1F509A"></i> <span>Data Histori</span></a>
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-history" style="color: #1F509A"></i>
+                    <span>Data Histori</span></a>
                 <ul class="dropdown-menu">
                     <li class="">
                         <a class="nav-link" href="{{ route('histori-pt.index')}}">Perguruan Tinggi</a>
@@ -61,7 +61,8 @@
         </ul>
 
         <div class="p-3 hide-sidebar-mini">
-            <a href="{{ asset('Manual Book SI-JAKI.pdf') }}" target="_blank" class="btn btn-primary btn-lg btn-block btn-icon-split">
+            <a href="{{ asset('Manual Book SI-JAKI.pdf') }}" target="_blank"
+                class="btn btn-primary btn-lg btn-block btn-icon-split">
                 <i class="fas fa-book"></i> Buku Panduan
             </a>
         </div>
@@ -76,52 +77,65 @@
 
 <style>
     .main-sidebar {
-        color: #0077f6; /* Warna teks agar kontras dengan background */
+        color: #0077f6;
+        /* Warna teks agar kontras dengan background */
     }
 
-    .logo-container-large, .logo-container-small {
+    /* Medium Logo Container */
+    .logo-container-medium {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 100%;
-        height: 80px;
-        overflow: hidden;
-        margin-bottom: 15px; /* Menambahkan jarak antara gambar dan teks berikutnya */
     }
 
-    .brand-image-large  {
-        max-width: 100%;
-        max-height: 100%;
+    /* Medium Logo Size */
+    .brand-image-medium {
+        width: 120px;
+        /* Adjusted for medium size */
+        height: auto;
         object-fit: contain;
+        margin-top: 5px;
+        /* Added top margin */
     }
 
+    /* Ensure Animation Works */
+    .animated-logo {
+        transition: opacity 1.5s ease-in-out;
+    }
+
+    /* Small Logo Size */
     .brand-image-small {
-        max-width: 80%;
-        max-height: 80%;
-        object-fit: contain;
+        width: 80px;
+        /* Adjust size as needed */
+        height: auto;
     }
 
     .sidebar-menu .menu-header {
         margin-top: 20px;
-        color: #0077f6; /* Ubah warna teks header menu */
+        color: #0077f6;
+        /* Ubah warna teks header menu */
     }
 
     .sidebar-menu .nav-link {
-        color: #0077f6; /* Warna link menu */
+        color: #0077f6;
+        /* Warna link menu */
     }
 
     /* Animasi untuk background */
     .animated-sidebar {
-        animation: background-move 10s linear infinite; /* Animasi berlangsung selama 10 detik */
+        animation: background-move 10s linear infinite;
+        /* Animasi berlangsung selama 10 detik */
     }
 
     @keyframes background-move {
         0% {
             background-position: 0% center;
         }
+
         50% {
             background-position: 100% center;
         }
+
         100% {
             background-position: 0% center;
         }
@@ -131,74 +145,14 @@
         max-width: 100%;
         max-height: 100%;
         object-fit: contain;
-        transition: opacity 1.5s ease-in-out; /* Smooth transition effect */
-        opacity: 1; /* Visible by default */
+        transition: opacity 1.5s ease-in-out;
+        /* Smooth transition effect */
+        opacity: 1;
+        /* Visible by default */
     }
 
     .logo-hidden {
-        opacity: 0; /* Make the image invisible */
+        opacity: 0;
+        /* Make the image invisible */
     }
-
-    .animated-logo-small {
-        max-width: 80%; /* Adjust to the sidebar space */
-        max-height: 80%; /* Adjust to the sidebar space */
-        object-fit: contain;
-        transition: opacity 1.5s ease-in-out; /* Smooth fade transition */
-        opacity: 1; /* Initially visible */
-    }
-
-    .logo-hidden-small {
-        opacity: 0; /* Make the image invisible */
-    }
-
 </style>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const images = [
-            "{{ asset('logo/logo-jaki.png') }}",
-            "{{ asset('logo/lldikti3.png') }}"
-        ];
-
-        const logoElement = document.querySelector('.animated-logo');
-        let currentImageIndex = 0;
-
-        setInterval(() => {
-            // Fade out the current logo
-            logoElement.classList.add('logo-hidden');
-
-            setTimeout(() => {
-                // Change the image while hidden
-                currentImageIndex = (currentImageIndex + 1) % images.length;
-                logoElement.src = images[currentImageIndex];
-
-                // Fade in the new logo
-                logoElement.classList.remove('logo-hidden');
-            }, 1500); // Matches the fade-out duration
-        }, 5000); // Change image every 3 seconds
-    });
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const smallImages = [
-            "{{ asset('logo/logo-sijaki-sidebar.png') }}",
-            "{{ asset('logo/logo-lldikti3.png') }}"
-        ];
-
-        const smallLogoElement = document.querySelector('.animated-logo-small');
-        let currentSmallImageIndex = 0;
-
-        setInterval(() => {
-            // Fade out the current logo
-            smallLogoElement.classList.add('logo-hidden-small');
-
-            setTimeout(() => {
-                // Change the image while hidden
-                currentSmallImageIndex = (currentSmallImageIndex + 1) % smallImages.length;
-                smallLogoElement.src = smallImages[currentSmallImageIndex];
-
-                // Fade in the new logo
-                smallLogoElement.classList.remove('logo-hidden-small');
-            }, 1500); // Matches the fade-out duration
-        }, 5000); // Change image every 3 seconds
-    });
-</script>
