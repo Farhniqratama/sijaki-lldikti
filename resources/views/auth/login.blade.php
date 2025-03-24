@@ -7,9 +7,9 @@
     }
 
     body {
-        background-image: url('{{ asset("background.png") }}');
+        background-image: url('{{ asset('background.png') }}');
         background-size: cover;
-        background-position: center;
+        background-position: left center;
         background-attachment: fixed;
         margin: 0;
         padding: 0;
@@ -17,7 +17,90 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        animation: backgroundMove 15s ease-in-out infinite;
+        animation: backgroundMove 10s linear infinite alternate;
+    }
+
+    /* Background movement animation */
+    @keyframes backgroundMove {
+        0% {
+            background-position: left center;
+        }
+
+        100% {
+            background-position: right center;
+        }
+    }
+
+
+    .error-message {
+        background-color: #ffebee;
+        /* Light red background */
+        border: 1px solid #d32f2f;
+        /* Darker red border */
+        color: #b71c1c;
+        /* Deep red text */
+        padding: 12px;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: center;
+        width: 100%;
+        position: relative;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.5s ease-in, transform 0.5s ease-in;
+    }
+
+    /* Close button styling */
+    .close-btn {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+        color: #d32f2f;
+    }
+
+    /* Loading bar */
+    .loading-bar {
+        height: 3px;
+        background-color: #d32f2f;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        animation: shrinkBar 5s linear forwards;
+    }
+
+    @keyframes shrinkBar {
+        from {
+            width: 100%;
+        }
+
+        to {
+            width: 0;
+        }
+    }
+
+    /* Add fade-in animation */
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Apply the animation to the section */
+    .animated-section {
+        animation: fadeIn 1s ease-out;
     }
 </style>
 
@@ -43,7 +126,7 @@
 <body>
 
     <section
-        class="h-screen flex items-center justify-center bg-no-repeat inset-0 bg-cover bg-[url('../images/bg-2.png')]">
+        class="h-screen flex items-center justify-center bg-no-repeat inset-0 bg-cover bg-[url('../images/bg-2.png')] animated-section">
         <div class="container 2xl:px-80 xl:px-52">
             <div class="bg-white rounded-lg overflow-hidden" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
                 <div class="grid xl:grid-cols-5 lg:grid-cols-3 md:grid-cols-2 gap-6">
@@ -73,12 +156,49 @@
                             </h1>
 
 
-                            <!-- Menampilkan error -->
                             @if (session('error'))
-                            <div class="text-red-600 text-sm mb-3">{{ session('error') }}</div>
+                                <div id="error-message" class="error-message">
+                                    <strong>Login Gagal!</strong>
+                                    <span>
+                                        {{ session('error') }}
+                                    </span>
+                                    <button id="close-error" class="close-btn">&times;</button>
+                                    <div class="loading-bar"></div>
+                                </div>
+
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function() {
+                                        var errorMessage = document.getElementById('error-message');
+                                        var closeBtn = document.getElementById('close-error');
+
+                                        // Show the error message with animation
+                                        errorMessage.style.opacity = "1";
+                                        errorMessage.style.transform = "translateY(0)";
+
+                                        // Hide the error message after 5 seconds
+                                        var hideTimeout = setTimeout(function() {
+                                            fadeOutError();
+                                        }, 5000); // 5000ms = 5 seconds
+
+                                        // Close button event listener
+                                        closeBtn.addEventListener('click', function() {
+                                            clearTimeout(hideTimeout); // Stop auto-hide
+                                            fadeOutError();
+                                        });
+
+                                        function fadeOutError() {
+                                            errorMessage.style.transition = "opacity 0.5s ease-out, transform 0.5s ease-out";
+                                            errorMessage.style.opacity = "0";
+                                            errorMessage.style.transform = "translateY(-20px)";
+                                            setTimeout(() => {
+                                                errorMessage.style.display = "none";
+                                            }, 500);
+                                        }
+                                    });
+                                </script>
                             @endif
 
-                            <!-- Update form action -->
+                            <!-- Form Login -->
                             <form action="{{ route('login.authenticate') }}" method="POST" class="space-y-5 mt-10">
                                 @csrf
 
@@ -92,9 +212,6 @@
                                         class="absolute text-sky-600 inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-4">
                                         <i class="fa-solid fa-user"></i>
                                     </div>
-                                    @error('name')
-                                    <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
-                                    @enderror
                                 </div>
 
                                 <!-- Input Password -->
@@ -107,7 +224,7 @@
                                         <i class="fa-solid fa-lock"></i>
                                     </div>
                                     @error('password')
-                                    <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                                        <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
                                     @enderror
                                 </div>
 

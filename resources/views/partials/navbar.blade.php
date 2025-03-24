@@ -1,34 +1,23 @@
 <style>
-    /* Animated Gradient Background */
     .animated-gradient-navbar {
-        background: linear-gradient(90deg, #007bff, #0056b3, #007bff);
-        background-size: 300% 300%;
-        animation: gradientAnimation 5s ease infinite;
+        background-color: #b6ecfe;
+        /* Maintain clean background color */
         color: white;
         /* Adjust text color for visibility */
+        box-shadow: 0 1px 0px rgba(0, 0, 0, 0.1);
+        /* Modern solid bottom border */
     }
 
-
-    /* Gradient Animation */
-    @keyframes gradientAnimation {
-        0% {
-            background-position: 0% 50%;
-        }
-
-        50% {
-            background-position: 100% 50%;
-        }
-
-        100% {
-            background-position: 0% 50%;
-        }
-    }
 
     /* Additional Styling for Text and Elements */
     .navbar a {
-        color: rgb(205, 201, 201) !important;
-        /* Ensure links are visible */
+        color: #0050A5FF !important;
+        /* Set text color to Bootstrap primary blue */
+        font-weight: bold;
+        /* Make text bold */
     }
+
+
 
     .navbar .badge {
         background-color: #dc3545;
@@ -46,7 +35,7 @@
         {{-- <li class="dropdown dropdown-list-toggle">
             <a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep">
                 <i class="far fa-bell"></i>
-                @if(auth()->user()->unreadNotifications->count() > 0)
+                @if (auth()->user()->unreadNotifications->count() > 0)
                 <span class="badge badge-danger">{{ auth()->user()->unreadNotifications->count() }}</span>
                 @endif
             </a>
@@ -57,7 +46,7 @@
                     </div>
                 </div>
                 <div class="dropdown-list-content dropdown-list-icons">
-                    @foreach(auth()->user()->unreadNotifications as $notification)
+                    @foreach (auth()->user()->unreadNotifications as $notification)
                     <a href="{{ $notification->data['url'] }}" class="dropdown-item">
                         <div class="dropdown-item-desc">
                             <b>{{ $notification->data['title'] }}</b>
@@ -76,8 +65,11 @@
                 <div class="d-sm-none d-lg-inline-block">Hi, {{ Auth::user()->pokja }}</div>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <div class="dropdown-title">Logged in {{ Auth::user()->last_login ?
-                    Auth::user()->last_login->setTimezone('Asia/Jakarta')->diffForHumans() : 'just now' }}</div>
+                <div class="dropdown-title">Logged in
+                    {{ Auth::user()->last_login
+                        ? Auth::user()->last_login->setTimezone('Asia/Jakarta')->diffForHumans()
+                        : 'just now' }}
+                </div>
                 <div class="dropdown-divider"></div>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf

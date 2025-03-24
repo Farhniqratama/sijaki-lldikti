@@ -1,52 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <style>
-    /* Animasi Fade-In untuk Halaman */
-    @keyframes fadeIn {
-        0% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 1;
-        }
-    }
-
-    .fade-in {
-        animation: fadeIn 1s ease-in-out;
-    }
-
-    /* Navbar Background with Blue Gradient */
-    .gradient-blue-navbar {
-        background: linear-gradient(90deg, #007bff, #0056b3, #007bff);
-        /* Gradien biru dari terang ke gelap */
-        background-size: 300% 300%;
-        animation: blueGradientAnimation 5s ease infinite;
-        /* Optional animated gradient */
-        height: 60px;
-        /* Adjust based on your navbar height */
-        width: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        /* Ensure it sits behind navbar content */
-    }
-
-    /* Keyframes for Gradient Animation */
-    @keyframes blueGradientAnimation {
-        0% {
-            background-position: 0% 50%;
-        }
-
-        50% {
-            background-position: 100% 50%;
-        }
-
-        100% {
-            background-position: 0% 50%;
-        }
-    }
-
     /* Navbar Content Styling */
     .navbar {
         position: relative;
@@ -67,6 +21,130 @@
         color: #dcdcdc;
         /* Light grey on hover */
     }
+
+    /* Full Page Preloader */
+    #preloader {
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        background: linear-gradient(45deg, #FFFFFFFF, #FFFFFFFF);
+        background-size: 200% 200%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        animation: bgAnimation 5s infinite alternate ease-in-out;
+        transition: opacity 0.8s ease-in-out;
+    }
+
+    /* Background Animation */
+    @keyframes bgAnimation {
+        0% {
+            background-position: left top;
+        }
+
+        100% {
+            background-position: right bottom;
+        }
+    }
+
+    /* Centered spinner */
+    .spinner {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+        opacity: 0;
+        transform: scale(0.8);
+        animation: fadeInScale 1s ease-in-out forwards;
+    }
+
+    /* Logo Animation */
+    @keyframes fadeInScale {
+        0% {
+            opacity: 0;
+            transform: scale(0.5);
+        }
+
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .sijaki-logo-preloader {
+        width: 280px;
+        height: auto;
+        animation: bounce 1.5s infinite alternate;
+    }
+
+    /* Bouncing Animation */
+    @keyframes bounce {
+        0% {
+            transform: translateY(0px);
+        }
+
+        100% {
+            transform: translateY(-10px);
+        }
+    }
+
+    /* Animated text */
+    .supported-by {
+        font-size: 20px;
+        font-weight: bold;
+        color: navy;
+        margin-top: 10px;
+        opacity: 0;
+        transform: translateY(10px);
+        animation: slideUp 1s 0.5s forwards;
+    }
+
+    /* Slide Up Effect */
+    @keyframes slideUp {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0px);
+        }
+    }
+
+    /* Rotating Loader */
+    .animated-spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(255, 255, 255, 0.3);
+        border-top: 5px solid #29B9E9FF;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-top: 15px;
+    }
+
+    /* Spinner Animation */
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* Supported logo */
+    .supported-logo {
+        width: 150px;
+        height: auto;
+        opacity: 0;
+        transform: translateY(10px);
+        animation: slideUp 1s 0.7s forwards;
+    }
 </style>
 
 <head>
@@ -79,7 +157,7 @@
     <link rel="stylesheet" href="{{ asset('stisla/dist/assets/modules/fontawesome/css/all.min.css') }}">
 
     <!-- CSS Libraries -->
-    <link rel="stylesheet" href="{{ asset('stisla/dist/assets/modules/prism/prism.css')}}">
+    <link rel="stylesheet" href="{{ asset('stisla/dist/assets/modules/prism/prism.css') }}">
 
     <!-- CSS Libraries -->
     <link rel="stylesheet" href="{{ asset('stisla/dist/assets/modules/jqvmap/dist/jqvmap.min.css') }}">
@@ -88,7 +166,8 @@
     <link rel="stylesheet" href="{{ asset('stisla/dist/assets/modules/summernote/summernote-bs4.css') }}">
 
     <!-- CSS Libraries -->
-    <link rel="stylesheet" href="{{ asset('stisla/dist/assets/modules/bootstrap-daterangepicker/daterangepicker.css')}}">
+    <link rel="stylesheet"
+        href="{{ asset('stisla/dist/assets/modules/bootstrap-daterangepicker/daterangepicker.css') }}">
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('stisla/dist/assets/css/style.css') }}">
@@ -98,10 +177,34 @@
     @stack('styles')
 </head>
 
-<body>    
+@if (session()->pull('show_preloader'))
+    <div id="preloader">
+        <div class="spinner">
+            <div class="logo-container">
+                <img src="{{ asset('logo-sijaki-sidebar.png') }}" alt="SI-JAKI Logo" class="sijaki-logo-preloader">
+                <p class="supported-by">Supported by</p>
+                <img src="{{ asset('lldikti3.png') }}" alt="Supported Logo" class="supported-logo">
+            </div>
+            <div class="animated-spinner"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(() => {
+                document.getElementById("preloader").style.opacity = "0";
+                setTimeout(() => {
+                    document.getElementById("preloader").style.display = "none";
+                }, 800); // Fade-out speed
+            }, 2000); // Preloader duration (2 seconds)
+        });
+    </script>
+@endif
+
+<body>
     <div id="app">
         <div class="main-wrapper main-wrapper-1">
-            <div class="navbar-bg gradient-blue-navbar"></div>
+            <div class="navbar-bg"></div>
 
             @include('partials.navbar') {{-- Navbar Partial --}}
             @include('partials.sidebar') {{-- Sidebar Partial --}}
@@ -114,32 +217,32 @@
                     </div> --}}
 
                     @yield('content')
-                    @if(session('success'))
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            swal({
-                                title: 'Berhasil!',
-                                text: "{{ session('success') }}",
-                                icon: 'success',
-                                timer: 3000,
-                                buttons: false,
+                    @if (session('success'))
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                swal({
+                                    title: 'Berhasil!',
+                                    text: "{{ session('success') }}",
+                                    icon: 'success',
+                                    timer: 3000,
+                                    buttons: false,
+                                });
                             });
-                        });
-                    </script>
+                        </script>
                     @endif
 
-                    @if(session('error'))
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            swal({
-                                title: 'Error!',
-                                text: "{{ session('error') }}",
-                                icon: 'error',
-                                timer: 3000,
-                                buttons: false,
+                    @if (session('error'))
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                swal({
+                                    title: 'Error!',
+                                    text: "{{ session('error') }}",
+                                    icon: 'error',
+                                    timer: 3000,
+                                    buttons: false,
+                                });
                             });
-                        });
-                    </script>
+                        </script>
                     @endif
                 </section>
             </div>
@@ -166,12 +269,12 @@
     <script src="{{ asset('stisla/dist/assets/modules/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
 
     <!-- JS Libraies -->
-    <script src="{{ asset('stisla/dist/assets/modules/prism/prism.js')}}"></script> 
-    <script src="{{ asset('stisla/dist/assets/modules/bootstrap-daterangepicker/daterangepicker.js')}}"></script>   
+    <script src="{{ asset('stisla/dist/assets/modules/prism/prism.js') }}"></script>
+    <script src="{{ asset('stisla/dist/assets/modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 
     <!-- Page Specific JS File -->
-    <script src="{{ asset('stisla/dist/assets/js/page/bootstrap-modal.js')}}"></script>
-    
+    <script src="{{ asset('stisla/dist/assets/js/page/bootstrap-modal.js') }}"></script>
+
     <!-- Template JS File -->
     <script src="{{ asset('stisla/dist/assets/js/scripts.js') }}"></script>
     <script src="{{ asset('stisla/dist/assets/js/custom.js') }}"></script>

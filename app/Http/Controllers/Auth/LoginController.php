@@ -19,22 +19,26 @@ class LoginController extends Controller
             'name' => ['required'],
             'password' => ['required'],
         ]);
-    
+
         if (Auth::attempt($credentials, $request->remember)) {
             $request->session()->regenerate();
-    
+
             Auth::user()->update([
                 'last_login' => now()->setTimezone('UTC')
             ]);
-    
-            // Pastikan pengalihan langsung ke home setelah login
+
+            // Set session flag to show preloader
+            session(['show_preloader' => true]);
+
             return redirect()->route('home');
         }
-    
+
         return back()->withErrors([
             'name' => 'Username atau Password salah',
         ])->with('error', 'Username atau Password salah')->onlyInput('name');
-    }    
+    }
+
+
 
     public function logout(Request $request)
     {
