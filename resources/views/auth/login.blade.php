@@ -7,9 +7,9 @@
     }
 
     body {
-        background-image: url('{{ asset('background.png') }}');
+        background-image: url("{{ asset('background.png') }}");
         background-size: cover;
-        background-position: left center;
+        background-position: center center;
         background-attachment: fixed;
         margin: 0;
         padding: 0;
@@ -19,6 +19,7 @@
         align-items: center;
         animation: backgroundMove 10s linear infinite alternate;
     }
+
 
     /* Background movement animation */
     @keyframes backgroundMove {
@@ -132,18 +133,85 @@
                 <div class="grid xl:grid-cols-5 lg:grid-cols-3 md:grid-cols-2 gap-6">
 
                     <!-- Bagian Kiri -->
-                    <div class="xl:col-span-2 lg:col-span-1">
+                    <div class="xl:col-span-2 lg:col-span-1 hidden md:block">
                         <div class="bg-sky-600 text-white gap-10 h-full w-full p-7 space-y-6 lg:space-y-0">
-                            <div class="flex flex-col justify-center text-center h-full">
-                                <!-- SI-JAKI Image on Top -->
-                                <img src="{{ asset('logo/logo-sijaki-sidebar.png') }}" alt="SI-JAKI"
-                                    class="w-32 mb-4 logo-white-filter">
-                                <p class="text-gray-200 font-normal leading-relaxed">Sistem Informasi Jejak Pembinaan
-                                    Perguruan Tinggi
+                            <div class="flex flex-col justify-center items-center text-center h-full">
+                                <!-- Alternating Image and Text -->
+                                <img id="logoImage" src="{{ asset('logo/logo-sijaki-sidebar.png') }}" alt="SI-JAKI"
+                                    class="image-size mb-4 logo-white-filter fade-transition">
+                                <p id="logoText" class="text-gray-200 font-normal leading-relaxed fade-transition">
+                                    Sistem Informasi Jejak Pembinaan Perguruan Tinggi
                                 </p>
                             </div>
                         </div>
                     </div>
+
+                    <!-- CSS for Smooth Fade Effect -->
+                    <style>
+                        .fade-transition {
+                            transition: opacity 1s ease-in-out;
+                            opacity: 1;
+                        }
+
+                        .fade-out {
+                            opacity: 0;
+                        }
+
+                        /* Default size for images */
+                        .image-size {
+                            width: 16rem;
+                            /* Default size (adjust as needed) */
+                        }
+
+                        /* Smaller size for QR Code */
+                        .qr-size {
+                            width: 6rem;
+                            /* Smaller size for QR */
+                        }
+                    </style>
+
+                    <!-- JavaScript for Automatic Alternating Images and Text -->
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+        const logoImage = document.getElementById("logoImage");
+        const logoText = document.getElementById("logoText");
+
+        const images = [
+            {
+                src: "{{ asset('logo/logo-sijaki-sidebar.png') }}",
+                text: "Sistem Informasi Jejak Pembinaan Perguruan Tinggi",
+                filter: "logo-white-filter",
+                size: "image-size" // Default size for SI-JAKI logo
+            },
+            {
+                src: "{{ asset('logo/sijakiqr.jpeg') }}",
+                text: 'Scan QR Code atau kunjungi <a href="http://s.id/sijaki" class="underline text-white" target="_blank">http://s.id/sijaki</a>',
+                filter: "",
+                size: "qr-size" // Smaller size for QR code
+            }
+        ];
+
+        let index = 0;
+        setInterval(() => {
+            // Add fade-out effect
+            logoImage.classList.add("fade-out");
+            logoText.classList.add("fade-out");
+
+            setTimeout(() => {
+                // Change content after fade-out
+                index = (index + 1) % images.length;
+                logoImage.src = images[index].src;
+                logoImage.className = images[index].size + " mb-4 fade-transition " + images[index].filter;
+                logoText.innerHTML = images[index].text;
+
+                // Add fade-in effect
+                logoImage.classList.remove("fade-out");
+                logoText.classList.remove("fade-out");
+            }, 1000); // Wait for fade-out animation before changing content
+        }, 5000); // Change every 5 seconds
+    });
+                    </script>
+
 
                     <!-- Bagian Form Login -->
                     <div class="xl:col-span-3 lg:col-span-2 lg:m-10 m-5">
@@ -157,17 +225,17 @@
 
 
                             @if (session('error'))
-                                <div id="error-message" class="error-message">
-                                    <strong>Login Gagal!</strong>
-                                    <span>
-                                        {{ session('error') }}
-                                    </span>
-                                    <button id="close-error" class="close-btn">&times;</button>
-                                    <div class="loading-bar"></div>
-                                </div>
+                            <div id="error-message" class="error-message">
+                                <strong>Login Gagal!</strong>
+                                <span>
+                                    {{ session('error') }}
+                                </span>
+                                <button id="close-error" class="close-btn">&times;</button>
+                                <div class="loading-bar"></div>
+                            </div>
 
-                                <script>
-                                    document.addEventListener("DOMContentLoaded", function() {
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function() {
                                         var errorMessage = document.getElementById('error-message');
                                         var closeBtn = document.getElementById('close-error');
 
@@ -195,7 +263,7 @@
                                             }, 500);
                                         }
                                     });
-                                </script>
+                            </script>
                             @endif
 
                             <!-- Form Login -->
@@ -224,7 +292,7 @@
                                         <i class="fa-solid fa-lock"></i>
                                     </div>
                                     @error('password')
-                                        <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                                    <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
                                     @enderror
                                 </div>
 
